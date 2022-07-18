@@ -1,0 +1,79 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 80vh;
+  width: 100%;
+}
+
+.gauge {
+  position: relative;
+  // border-radius: 10px;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+
+  .ticks {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    z-index: -1;
+
+    span {
+      position: absolute;
+      font-size: 1.7em;
+      color: gray;
+    }
+
+    span:nth-child(1) {
+      top: 85%;
+      left: -55px;
+      transform: translateY(-50%);
+    }
+
+    span:nth-child(2) {
+      left: 53%;
+      top: 33%;
+      transform: translateX(-50%);
+    }
+
+    span:nth-child(3) {
+      top: 85%;
+      right: -85px;
+      transform: translateY(-50%);
+    }
+  }
+
+  .svg-round {
+    fill: transparent;
+    transition: all 2 ease-out;
+   }
+
+  .animate-svg  {
+    stroke: url(#gradient);
+    fill: transparent;
+    cursor: pointer;
+  }
+
+  .pointer {
+    position: relative;
+    top: 64%;
+    left: 53%;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 140px solid #000;
+    border-bottom-left-radius: 35%;
+    border-bottom-right-radius: 35%;
+    transform-origin: center bottom;
+    transform: rotate(-125deg);
+    transition: width 2s, height 2s, background-color 2s, transform 2s;
+  }
+
+  .move {
+    transform: rotate(-1deg);
+  }
+}
