@@ -14,7 +14,7 @@ export default function GaugeOne({ min, max, value, symbol, getPointerDeg }) {
             max,
             value
         )}deg)`;
-    });
+    }, [getPointerDeg, max, min, value]);
 
     return (
         <div className='gauge-one'>
