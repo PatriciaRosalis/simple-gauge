@@ -47,7 +47,6 @@
 
     .svg-round {
       fill: transparent;
-      transition: all 2 ease-out;
     }
 
     .animate-svg {
@@ -69,7 +68,7 @@
       border-bottom-right-radius: 35%;
       transform-origin: center bottom;
       transform: rotate(-90deg);
-      transition: width 2s, height 2s, background-color 2s, transform 2s;
+      transition: width 3s, height 3s, background-color 3s, transform 3s;
 
       #value {
         position: absolute;
@@ -139,7 +138,7 @@
       border-bottom-right-radius: 40%;
       transform-origin: center bottom;
       transform: rotate(-90deg);
-      transition: width 2s, height 2s, background-color 2s, transform 2s;
+      transition: width 3s, height 3s, background-color 3s, transform 3s;
 
       #value {
         position: absolute;
