@@ -1,44 +1,47 @@
 .App {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  height: 80vh;
+  height: 90vh;
   width: 100%;
 
-  .gauge {
+
+
+  .gauge-one {
     position: relative;
 
     .ticks {
       position: absolute;
+      z-index: 0;
       width: 100%;
       height: 100%;
       padding: 5px;
-      z-index: -1;
 
       span {
         position: absolute;
         font-size: 1.7em;
-        color: gray;
+        color: #0fd35450;
 
-        &:nth-child(1) {
-          top: 85%;
-          left: -55px;
-          transform: translateY(-50%);
+        &:hover {
+          color: #0fd354;
+          z-index: 0;
         }
+      }
 
-        &:nth-child(2) {
-          left: 53%;
-          top: 33%;
-          transform: translateX(-50%);
-        }
+      #min {
+        bottom: 45px;
+        left: -60px;
+      }
 
-        &:nth-child(3) {
-          top: 85%;
-          right: -85px;
-          transform: translateY(-50%);
-        }
+      #middle {
+        left: (420px / 2);
+        top: 15px;
+      }
 
+      #max {
+        bottom: 45px;
+        right: -90px;
       }
     }
 
@@ -54,23 +57,125 @@
     }
 
     .pointer {
-      position: relative;
-      top: 64%;
-      left: 53%;
+      position: absolute;
+      bottom: 45px;
+      left: 225px;
       width: 0;
       height: 0;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-bottom: 140px solid #000;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 300px solid #16113A;
       border-bottom-left-radius: 35%;
       border-bottom-right-radius: 35%;
       transform-origin: center bottom;
-      transform: rotate(-125deg);
+      transform: rotate(-90deg);
       transition: width 2s, height 2s, background-color 2s, transform 2s;
+
+      #value {
+        position: absolute;
+        color: #178a3e;
+        border-radius: 5px;
+        font-size: 25px;
+        padding: 8px;
+        font-weight: 500;
+        left: 5px;
+      }
     }
 
-    .move {
-      transform: rotate(-1deg);
+  }
+
+  .gauge-two {
+    position: relative;
+
+    .box {
+      width: 350px;
+      height: 200px;
+      border-radius: 200px 200px 0 0;
+      background:
+        linear-gradient(180deg, transparent 50%, #fff 0) top/100% 200%,
+        radial-gradient(farthest-side at bottom, #fff calc(100% - 40px), transparent 0),
+        linear-gradient(to right, #C81F70, #D19592);
     }
+
+    .box::before {
+      content: "";
+      display: block;
+      padding-top: 50%;
+    }
+
+    span {
+      font-size: 14px;
+      color: #C81F70;
+    }
+
+    #min {
+      position: absolute;
+      left: 15%;
+      bottom: 0;
+    }
+
+    #middle {
+      position: absolute;
+      left: 160px;
+      top: 25%;
+    }
+
+    #max {
+      position: absolute;
+      left: 270px;
+      bottom: 0;
+    }
+
+    .needle {
+      position: absolute;
+      bottom: 0;
+      left: 175px;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 250px solid #000;
+      border-bottom-left-radius: 40%;
+      border-bottom-right-radius: 40%;
+      transform-origin: center bottom;
+      transform: rotate(-90deg);
+      transition: width 2s, height 2s, background-color 2s, transform 2s;
+
+      #value {
+        position: absolute;
+        color: #C81F70;
+        font-size: 20px;
+        padding: 5px;
+        font-weight: 500;
+        top: 5px;
+        left: 5px;
+      }
+    }
+
+  }
+}
+
+.error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 90vh;
+
+  p {
+    font-size: 40px;
+    font-weight: 500;
+  }
+
+  button {
+    background-color: #0FD354;
+    color: #16113A;
+    padding: 8px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 23px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
   }
 }
