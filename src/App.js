@@ -1,12 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.scss';
+import GaugeOne from './components/GaugeOne';
+import GaugeTwo from './components/GaugeTwo';
+
+function getPointerDeg(min, max, val) {
+    const maxMin = max - min;
+    const value = val - min;
+    const deg = (180 * value) / maxMin - 90;
+
+    return deg;
+}
 
 function App() {
     const URL = 'https://widgister.herokuapp.com/challenge/frontend';
-    const pointerRef = useRef(null);
-    const pathRef = useRef(null);
 
-    const [value, setValue] = useState({});
+    const [value, setValue] = useState();
     const [error, setError] = useState();
 
     useEffect(() => {
@@ -32,65 +40,70 @@ function App() {
                     newValue.symbol = '£';
                 } else if (data.unit === 'EUR') {
                     newValue.symbol = '€';
+                } else if (!data.unit) {
+                    newValue.symbol = '£';
                 } else {
                     newValue.symbol = data.unit;
                 }
+
                 setValue(newValue);
-
-                const pointer = pointerRef.current;
-                pointer.className = 'pointer move';
-
-                const path = pathRef.current;
-                path.setAttribute('class', 'svg-round animate-svg');
             })
             .catch((err) => setError(err));
     }, []);
 
     if (error) {
-        return <p style={{ color: 'red' }}>Something went wrong! Try again.</p>;
+        return (
+            <div className='error-message'>
+                <p style={{ color: '#ec373c' }}>Something went wrong!</p>
+                <button onClick={() => window.location.reload()}>
+                    Try again
+                </button>
+            </div>
+        );
     }
+
+    if (value?.value < value?.min || value?.value > value?.max)
+        return (
+            <div className='error-message'>
+                <p>Ups! Value is not between min & max!</p>
+                <button onClick={() => window.location.reload()}>
+                    Try again
+                </button>
+            </div>
+        );
+
+    if (!value && !error)
+        return (
+            <div className='error-message'>
+                <p
+                    style={{
+                        textAlign: 'center',
+                        fontSize: '30px',
+                        fontWeight: 'semibold',
+                        lineHeight: '80vh',
+                    }}
+                >
+                    Loading...
+                </p>
+            </div>
+        );
 
     return (
         <div className='App'>
-            <div className='gauge'>
-                <div className='ticks'>
-                    <span>
-                        {value.symbol}
-                        {value.min}
-                    </span>
-                    <span>
-                        {value.symbol}
-                        {value.value}
-                    </span>
-                    <span>
-                        {value.symbol}
-                        {value.max}
-                    </span>
-                </div>
-
-                <div className='pointer' ref={pointerRef}></div>
-
-                <svg
-                    width='450'
-                    height='350'
-                    viewBox='0 0 450 390'
-                    xmlns='http://www.w3.org/2000/svg'
-                >
-                    <defs>
-                        <linearGradient id='gradient'>
-                            <stop offset='5%' stopColor='#0FD354' />
-                            <stop offset='98%' stopColor='#16113A' />
-                        </linearGradient>
-                    </defs>
-                    <path
-                        d='M 40,350 C 45,10 450,10 450,350'
-                        stroke='black'
-                        strokeWidth='15'
-                        className='svg-round'
-                        ref={pathRef}
-                    />
-                </svg>
-            </div>
+            <GaugeOne
+                min={value.min}
+                max={value.max}
+                value={value.value}
+                symbol={value.symbol}
+                getPointerDeg={getPointerDeg}
+            />
+            <GaugeTwo
+                min={value.min}
+                max={value.max}
+                value={value.value}
+                symbol={value.symbol}
+                getPointerDeg={getPointerDeg}
+            />
         </div>
     );
 }
